@@ -1,0 +1,2079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Gallery - NextStep Foundation</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #2c7be5;
+            --secondary-color: #00d97e;
+            --dark-color: #12263f;
+            --light-color: #f9fbfd;
+            --accent-color: #ff7c00;
+            --text-color: #495057;
+            --text-light: #6e84a3;
+            --border-radius: 8px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Gallery Section Styles */
+        .gallery-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Gallery Filter */
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 10px 15px;
+            padding: 8px 20px;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            color: var(--primary-color);
+        }
+
+        .filter-btn:hover::after, .filter-btn.active::after {
+            width: 100%;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            height: 250px;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-category {
+            color: white;
+            background: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .gallery-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .gallery-date {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Gallery Modal */
+        .gallery-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .gallery-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow: auto;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: auto;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .modal-info {
+            padding: 0 20px;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .modal-category {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .modal-description {
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        /* Gallery Categories */
+        .category-section {
+            padding: 60px 0;
+        }
+
+        .category-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--dark-color);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 15px auto 0;
+        }
+
+        .category-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Testimonials in Gallery */
+        .testimonials-section {
+            background: var(--light-color);
+            padding: 80px 0;
+            margin-top: 40px;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            font-size: 4rem;
+            color: rgba(44, 123, 229, 0.1);
+            position: absolute;
+            top: -20px;
+            left: -15px;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 3px solid var(--primary-color);
+        }
+
+        .author-info h4 {
+            font-size: 1.1rem;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Impact Numbers */
+        .impact-section {
+            background: linear-gradient(135deg, var(--primary-color), #1a56a8);
+            padding: 80px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .impact-item {
+            padding: 20px;
+        }
+
+        .impact-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .impact-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-section {
+                padding: 60px 0;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 15px;
+            }
+            
+            .gallery-item {
+                height: 200px;
+            }
+            
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .impact-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .filter-btn {
+                font-size: 0.9rem;
+                margin: 0 5px 10px;
+                padding: 6px 15px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-item {
+                height: 250px;
+            }
+            
+            .impact-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .impact-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Component - Copy from here -->
+<header class="main-header">
+  <div class="header-container">
+    <!-- Logo and Organization Name -->
+    <div class="logo-container">
+      <a href="index.html" class="logo-link">
+        <span class="logo-icon">🌱</span>
+        <div class="logo-text">
+          <span class="org-name">NextStep Foundation</span>
+          <span class="org-tagline">Empowering Orphans, Supporting Disabilities</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+      <span class="toggle-bar"></span>
+      <span class="toggle-bar"></span>
+      <span class="toggle-bar"></span>
+    </button>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+        <li class="nav-item"><a href="programs.html" class="nav-link">Our Programs</a></li>
+        <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+        <li class="nav-item"><a href="Donate.html" class="nav-link">How to Help</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Donation CTA -->
+    <div class="header-cta">
+      <a href="donate.html" class="donate-btn">Donate Now</a>
+      <div class="social-icons">
+        <a href="https://wa.me/254712345678" class="social-icon whatsapp" aria-label="WhatsApp">
+          <span class="icon">💬</span>
+          <span class="tooltip">Chat on WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Header Styles */
+  .main-header {
+    background-color: #fff;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 0;
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #12263f;
+  }
+
+  .logo-icon {
+    font-size: 2.5rem;
+    margin-right: 10px;
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .org-name {
+    font-weight: 700;
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+
+  .org-tagline {
+    font-size: 0.75rem;
+    color: #6e84a3;
+    margin-top: 2px;
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+  }
+
+  .toggle-bar {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: #12263f;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+  }
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-item {
+    margin: 0 12px;
+    position: relative;
+  }
+
+  .nav-link {
+    color: #495057;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 0;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link:hover {
+    color: #2c7be5;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #2c7be5;
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .header-cta {
+    display: flex;
+    align-items: center;
+  }
+
+  .donate-btn {
+    background-color: #2c7be5;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    margin-right: 15px;
+    white-space: nowrap;
+  }
+
+  .donate-btn:hover {
+    background-color: #1a56a8;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(44, 123, 229, 0.3);
+  }
+
+  .social-icons {
+    display: flex;
+    align-items: center;
+  }
+
+  .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f5f7fa;
+    margin-left: 10px;
+    position: relative;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #12263f;
+  }
+
+  .social-icon.whatsapp {
+    background-color: #25D366;
+    color: white;
+  }
+
+  .social-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #12263f;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    margin-top: 5px;
+  }
+
+  .social-icon:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    margin-top: 10px;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 992px) {
+    .header-container {
+      flex-wrap: wrap;
+      padding: 10px 15px;
+    }
+
+    .nav-item {
+      margin: 0 8px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .mobile-menu-toggle {
+      display: block;
+      order: 1;
+    }
+
+    .logo-container {
+      order: 0;
+    }
+
+    .header-cta {
+      order: 2;
+      margin-left: auto;
+    }
+
+    .main-nav {
+      position: fixed;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      transform: translateY(-150%);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .main-nav.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .nav-list {
+      flex-direction: column;
+    }
+
+    .nav-item {
+      margin: 10px 0;
+    }
+
+    .nav-link {
+      padding: 10px 0;
+      display: block;
+    }
+
+    .mobile-menu-toggle.active .toggle-bar:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .mobile-menu-toggle.active .toggle-bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-toggle.active .toggle-bar:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+
+  @media (max-width: 576px) {
+    .org-name {
+      font-size: 1.1rem;
+    }
+
+    .org-tagline {
+      font-size: 0.65rem;
+    }
+
+    .donate-btn {
+      padding: 8px 15px;
+      font-size: 0.85rem;
+      margin-right: 8px;
+    }
+
+    .social-icon {
+      width: 35px;
+      height: 35px;
+    }
+
+    .logo-icon {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<script>
+  // Mobile Menu Toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.querySelector('.main-nav');
+    
+    toggle.addEventListener('click', function() {
+      this.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on nav links
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        toggle.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
+  });
+</script>
+<!-- Header Component - Copy to here -->
+
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Our Gallery</h2>
+                <p>Explore the heartwarming moments and impactful work of NextStep Foundation through our visual journey. Each image tells a story of hope, transformation, and community.</p>
+            </div>
+
+            <!-- Gallery Filter -->
+            <div class="gallery-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="orphan-care">Orphan Care</button>
+                <button class="filter-btn" data-filter="education">Education</button>
+                <button class="filter-btn" data-filter="walemavu">Walemavu Support</button>
+                <button class="filter-btn" data-filter="talent">Talent Development</button>
+                <button class="filter-btn" data-filter="events">Events</button>
+                <button class="filter-btn" data-filter="volunteers">Volunteers</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid">
+                <!-- Orphan Care Images -->
+                <div class="gallery-item fade-in delay-1" data-category="orphan-care">
+                    <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Children playing at NextStep Foundation" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Orphan Care</span>
+                        <h3 class="gallery-title">Daily Life at Our Home</h3>
+                        <span class="gallery-date">June 15, 2024</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item fade-in delay-2" data-category="orphan-care">
+                    <img src="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Children eating together" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Orphan Care</span>
+                        <h3 class="gallery-title">Nutritious Meals Together</h3>
+                        <span class="gallery-date">May 28, 2024</span>
+                    </div>
+                </div>
+
+                <!-- Education Images -->
+                <div class="gallery-item fade-in delay-3" data-category="education">
+                    <img src="https://images.unsplash.com/photo-1588072432906-62bc70e6e830?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Children in classroom" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Education</span>
+                        <h3 class="gallery-title">Learning New Concepts</h3>
+                        <span class="gallery-date">June 3, 2024</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item fade-in delay-4" data-category="education">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Graduation ceremony" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Education</span>
+                        <h3 class="gallery-title">Graduation Celebration</h3>
+                        <span class="gallery-date">April 10, 2024</span>
+                    </div>
+                </div>
+
+                <!-- Walemavu Support Images -->
+                <div class="gallery-item fade-in delay-1" data-category="walemavu">
+                    <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Therapy session" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Walemavu Support</span>
+                        <h3 class="gallery-title">Physical Therapy Session</h3>
+                        <span class="gallery-date">May 15, 2024</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item fade-in delay-2" data-category="walemavu">
+                    <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Wheelchair donation" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Walemavu Support</span>
+                        <h3 class="gallery-title">Mobility Equipment Donation</h3>
+                        <span class="gallery-date">March 22, 2024</span>
+                    </div>
+                </div>
+
+                <!-- Talent Development Images -->
+                <div class="gallery-item fade-in delay-3" data-category="talent">
+                    <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Music performance" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Talent Development</span>
+                        <h3 class="gallery-title">Music Performance</h3>
+                        <span class="gallery-date">June 8, 2024</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item fade-in delay-4" data-category="talent">
+                    <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Art exhibition" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Talent Development</span>
+                        <h3 class="gallery-title">Art Exhibition</h3>
+                        <span class="gallery-date">May 5, 2024</span>
+                    </div>
+                </div>
+
+                <!-- Events Images -->
+                <div class="gallery-item fade-in delay-1" data-category="events">
+                    <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80" alt="Christmas celebration" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Events</span>
+                        <h3 class="gallery-title">Christmas Celebration</h3>
+                        <span class="gallery-date">December 25, 2023</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item fade-in delay-2" data-category="events">
+                    <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Fundraising event" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Events</span>
+                        <h3 class="gallery-title">Annual Fundraiser</h3>
+                        <span class="gallery-date">November 18, 2023</span>
+                    </div>
+                </div>
+
+                <!-- Volunteers Images -->
+                <div class="gallery-item fade-in delay-3" data-category="volunteers">
+                    <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-1.2.1&auto=format&fit=crop&w=1349&q=80" alt="Volunteers teaching" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Volunteers</span>
+                        <h3 class="gallery-title">International Volunteers</h3>
+                        <span class="gallery-date">April 5, 2024</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item fade-in delay-4" data-category="volunteers">
+                    <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Community service" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Volunteers</span>
+                        <h3 class="gallery-title">Community Service Day</h3>
+                        <span class="gallery-date">March 10, 2024</span>
+                    </div>
+                </div>
+
+                <!-- Additional Images -->
+                <div class="gallery-item fade-in delay-1" data-category="orphan-care">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80" alt="Bedtime stories" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Orphan Care</span>
+                        <h3 class="gallery-title">Bedtime Stories</h3>
+                        <span class="gallery-date">June 12, 2024</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item fade-in delay-2" data-category="education">
+                    <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Computer class" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Education</span>
+                        <h3 class="gallery-title">Technology Education</h3>
+                        <span class="gallery-date">May 20, 2024</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item fade-in delay-3" data-category="walemavu">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80" alt="Sign language class" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Walemavu Support</span>
+                        <h3 class="gallery-title">Communication Skills</h3>
+                        <span class="gallery-date">April 18, 2024</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item fade-in delay-4" data-category="talent">
+                    <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Dance performance" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Talent Development</span>
+                        <h3 class="gallery-title">Cultural Dance</h3>
+                        <span class="gallery-date">June 1, 2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Highlights Section -->
+    <section class="category-section">
+        <div class="container">
+            <h2 class="category-title">Our Work in Focus</h2>
+            <p class="category-description">At NextStep Foundation, we focus on holistic development through various programs that cater to the physical, emotional, and intellectual needs of the children in our care.</p>
+
+            <div class="gallery-grid">
+                <!-- Orphan Care Highlight -->
+                <div class="gallery-item fade-in" data-category="orphan-care">
+                    <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Orphan care highlight" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Orphan Care</span>
+                        <h3 class="gallery-title">A Loving Home</h3>
+                        <span class="gallery-date">Featured Program</span>
+                    </div>
+                </div>
+
+                <!-- Education Highlight -->
+                <div class="gallery-item fade-in delay-1" data-category="education">
+                    <img src="https://images.unsplash.com/photo-1588072432906-62bc70e6e830?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Education highlight" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Education</span>
+                        <h3 class="gallery-title">Quality Learning</h3>
+                        <span class="gallery-date">Featured Program</span>
+                    </div>
+                </div>
+
+                <!-- Walemavu Highlight -->
+                <div class="gallery-item fade-in delay-2" data-category="walemavu">
+                    <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Walemavu highlight" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Walemavu Support</span>
+                        <h3 class="gallery-title">Inclusive Support</h3>
+                        <span class="gallery-date">Featured Program</span>
+                    </div>
+                </div>
+
+                <!-- Talent Highlight -->
+                <div class="gallery-item fade-in delay-3" data-category="talent">
+                    <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Talent highlight" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category">Talent Development</span>
+                        <h3 class="gallery-title">Nurturing Potential</h3>
+                        <span class="gallery-date">Featured Program</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Numbers Section -->
+    <section class="impact-section">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Our Impact in Numbers</h2>
+            <div class="impact-grid">
+                <div class="impact-item fade-in">
+                    <div class="impact-number">150+</div>
+                    <div class="impact-label">Children Supported</div>
+                </div>
+                <div class="impact-item fade-in delay-1">
+                    <div class="impact-number">25</div>
+                    <div class="impact-label">Walemavu Programs</div>
+                </div>
+                <div class="impact-item fade-in delay-2">
+                    <div class="impact-number">50+</div>
+                    <div class="impact-label">Talents Nurtured</div>
+                </div>
+                <div class="impact-item fade-in delay-3">
+                    <div class="impact-number">12</div>
+                    <div class="impact-label">Years of Service</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">Voices of Hope</h2>
+            <p class="category-description">Hear from those whose lives have been touched by NextStep Foundation's programs and initiatives.</p>
+
+            <div class="testimonial-grid">
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-quote">"NextStep Foundation gave me a family when I had none. The love and support I received helped me heal and believe in my future."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah K." class="author-img">
+                        <div class="author-info">
+                            <h4>Sarah K.</h4>
+                            <p>Former Resident, Now University Student</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in delay-1">
+                    <p class="testimonial-quote">"Volunteering here changed my perspective on life. The resilience and joy of these children is truly inspiring."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="David M." class="author-img">
+                        <div class="author-info">
+                            <h4>David M.</h4>
+                            <p>International Volunteer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in delay-2">
+                    <p class="testimonial-quote">"My son with disabilities found acceptance and specialized care at NextStep that he couldn't get elsewhere. We're forever grateful."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Grace W." class="author-img">
+                        <div class="author-info">
+                            <h4>Grace W.</h4>
+                            <p>Parent of Child with Disabilities</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Modal -->
+    <div class="gallery-modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <img src="" alt="" class="modal-img">
+            <div class="modal-info">
+                <span class="modal-category">Orphan Care</span>
+                <h2 class="modal-title">Daily Life at Our Home</h2>
+                <span class="modal-date">June 15, 2024</span>
+                <p class="modal-description">This photo captures the joyful moments of children during their free time at the foundation. Our home provides a safe and nurturing environment where children can play, learn, and grow together as a family. The bonds formed here often last a lifetime, creating a support system that many of our children lacked before coming to NextStep.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Footer Component - Copy from here -->
+<footer class="main-footer">
+  <div class="footer-container">
+    <!-- Footer Columns -->
+    <div class="footer-grid">
+      <!-- About Column -->
+      <div class="footer-column">
+        <h3 class="footer-title">About NextStep</h3>
+        <p class="footer-about">NextStep Foundation provides care, education, and support to orphaned children and individuals with disabilities, helping them build brighter futures.</p>
+        <div class="footer-social">
+          <a href="https://facebook.com" class="social-link facebook" aria-label="Facebook">
+            <span class="social-icon">📘</span>
+          </a>
+          <a href="https://twitter.com" class="social-link twitter" aria-label="Twitter">
+            <span class="social-icon">🐦</span>
+          </a>
+          <a href="https://instagram.com" class="social-link instagram" aria-label="Instagram">
+            <span class="social-icon">📷</span>
+          </a>
+          <a href="https://wa.me/254712345678" class="social-link whatsapp" aria-label="WhatsApp">
+            <span class="social-icon">💬</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links Column -->
+      <div class="footer-column">
+        <h3 class="footer-title">Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="gallery.html">Success Stories</a></li>
+          <li><a href="volunteer.html">Volunteer</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Programs Column -->
+      <div class="footer-column">
+        <h3 class="footer-title">Our Programs</h3>
+        <ul class="footer-links">
+          <li><a href="orphan-care.html">Orphan Care</a></li>
+          <li><a href="education.html">Education Support</a></li>
+          <li><a href="disability.html">Disability Programs</a></li>
+          <li><a href="talent.html">Talent Development</a></li>
+          <li><a href="health.html">Healthcare Initiatives</a></li>
+          <li><a href="community.html">Community Outreach</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact & Donate Column -->
+      <div class="footer-column">
+        <h3 class="footer-title">Get Involved</h3>
+        <div class="footer-contact">
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <p>123 Hope Avenue, Nairobi, Kenya</p>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <p>+254 712 345 678</p>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <p>info@nextstepfoundation.org</p>
+          </div>
+        </div>
+        <div class="footer-newsletter">
+          <h4>Stay Updated</h4>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email address" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Donation Banner -->
+    <div class="donation-banner">
+      <div class="banner-content">
+        <h3>Your Support Changes Lives</h3>
+        <p>Every donation helps us provide care, education, and opportunities to those who need it most.</p>
+        <div class="donation-options">
+          <a href="donate.html" class="donate-btn">Donate Now</a>
+          <a href="sponsor.html" class="sponsor-btn">Sponsor a Child</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="copyright">
+        &copy; <span id="year"></span> NextStep Foundation. All rights reserved.
+      </div>
+      <div class="footer-legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="transparency.html">Financial Transparency</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Footer Styles */
+  .main-footer {
+    background-color: #12263f;
+    color: #f9fbfd;
+    padding: 60px 0 0;
+    font-size: 0.95rem;
+  }
+
+  .footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 50px;
+  }
+
+  .footer-column {
+    margin-bottom: 30px;
+  }
+
+  .footer-title {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #2c7be5;
+  }
+
+  .footer-about {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #a8b5c6;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 15px;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: white;
+  }
+
+  .social-link:hover {
+    transform: translateY(-3px);
+  }
+
+  .social-link.facebook {
+    background-color: #3b5998;
+  }
+
+  .social-link.twitter {
+    background-color: #1da1f2;
+  }
+
+  .social-link.instagram {
+    background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+  }
+
+  .social-link.whatsapp {
+    background-color: #25D366;
+  }
+
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-links li {
+    margin-bottom: 12px;
+  }
+
+  .footer-links a {
+    color: #a8b5c6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: block;
+    padding: 5px 0;
+  }
+
+  .footer-links a:hover {
+    color: white;
+    padding-left: 5px;
+  }
+
+  .footer-contact {
+    margin-bottom: 25px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+  }
+
+  .contact-icon {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    line-height: 1.4;
+  }
+
+  .contact-item p {
+    margin: 0;
+    color: #a8b5c6;
+    line-height: 1.6;
+  }
+
+  .footer-newsletter h4 {
+    color: white;
+    margin-bottom: 15px;
+    font-size: 1rem;
+  }
+
+  .newsletter-form {
+    display: flex;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    font-size: 0.9rem;
+  }
+
+  .newsletter-form button {
+    background-color: #2c7be5;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+
+  .newsletter-form button:hover {
+    background-color: #1a56a8;
+  }
+
+  .donation-banner {
+    background: linear-gradient(135deg, #2c7be5, #1a56a8);
+    border-radius: 8px;
+    padding: 30px;
+    margin: 40px 0;
+    text-align: center;
+  }
+
+  .banner-content h3 {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .banner-content p {
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 700px;
+    margin: 0 auto 25px;
+  }
+
+  .donation-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .donate-btn, .sponsor-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .donate-btn {
+    background-color: white;
+    color: #2c7be5;
+  }
+
+  .donate-btn:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .sponsor-btn {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+
+  .sponsor-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .copyright {
+    color: #a8b5c6;
+    margin-bottom: 15px;
+  }
+
+  .footer-legal {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-legal a {
+    color: #a8b5c6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-legal a:hover {
+    color: white;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 992px) {
+    .footer-grid {
+      gap: 30px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .donation-banner {
+      padding: 25px 20px;
+    }
+
+    .banner-content h3 {
+      font-size: 1.3rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .newsletter-form {
+      flex-direction: column;
+    }
+
+    .newsletter-form input {
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+
+    .newsletter-form button {
+      border-radius: 4px;
+      padding: 12px;
+    }
+
+    .donation-options {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .donate-btn, .sponsor-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+  // Update copyright year automatically
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('year').textContent = new Date().getFullYear();
+  });
+</script>
+<!-- Footer Component - Copy to here -->
+
+
+<!-- Final Fixed Donation Widget with Working Toggle -->
+<div class="donation-widget">
+  <div class="donation-header">
+    <h3>Support Our Cause</h3>
+    <button class="toggle-widget" aria-label="Toggle donation widget">
+      <i class="fas fa-times close-icon"></i>
+      <i class="fas fa-heart open-icon"></i>
+    </button>
+  </div>
+  
+  <div class="donation-content">
+    <div class="donation-methods">
+      <div class="method">
+        <div class="method-icon">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/M-PESA_LOGO-01.svg" alt="M-Pesa" width="40">
+        </div>
+        <div class="method-details">
+          <h4>M-Pesa Paybill</h4>
+          <p>Business Number: <strong>123456</strong></p>
+          <p>Account: <strong>Nextstep</strong></p>
+          <p class="small-text">(Go to Lipa na M-Pesa > Paybill)</p>
+        </div>
+      </div>
+      
+      <div class="method">
+        <div class="method-icon">
+          <i class="fas fa-university"></i>
+        </div>
+        <div class="method-details">
+          <h4>Bank Transfer</h4>
+          <p>Bank: <strong>KCB Kenya</strong></p>
+          <p>Account: <strong>1234567890</strong></p>
+          <p>Name: <strong>Nextstep Foundation</strong></p>
+          <p class="small-text">(Include your name as reference)</p>
+        </div>
+      </div>
+      
+      <div class="method">
+        <div class="method-icon">
+          <i class="fab fa-paypal"></i>
+        </div>
+        <div class="method-details">
+          <h4>PayPal</h4>
+          <p>Email: <strong>donate@nextstepfoundation.org</strong></p>
+          <a href="https://paypal.me/nextstepfoundation" class="paypal-link" target="_blank">
+            Send via PayPal
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="donation-footer">
+      <p>Your support changes lives every day ❤️</p>
+      <a href="donate.html" class="more-options">More donation options</a>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Donation Widget Styles */
+.donation-widget {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 350px;
+  background: #fff;
+  border-radius: 10px 10px 0 10px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  overflow: hidden;
+  transform-origin: bottom right;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-family: 'Poppins', sans-serif;
+}
+
+.donation-header {
+  background: #e74c3c;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.donation-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.toggle-widget {
+  background: transparent;
+  border: none;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  padding: 0;
+}
+
+.toggle-widget:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.toggle-widget i {
+  position: absolute;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.close-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.open-icon {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.donation-content {
+  padding: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+  transition: all 0.4s ease;
+}
+
+/* Minimized State */
+.donation-widget.minimized {
+  width: 60px;
+  height: 60px;
+}
+
+.donation-widget.minimized .donation-header {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  justify-content: center;
+}
+
+.donation-widget.minimized .donation-header h3 {
+  display: none;
+}
+
+.donation-widget.minimized .close-icon {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.donation-widget.minimized .open-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.donation-widget.minimized .donation-content {
+  max-height: 0;
+  padding: 0 20px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* Rest of the CSS remains unchanged */
+.donation-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.method {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.method-icon {
+  width: 50px;
+  height: 50px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e74c3c;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.method-icon img {
+  width: 80%;
+  height: auto;
+}
+
+.method-details h4 {
+  margin: 0 0 5px 0;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.method-details p {
+  margin: 3px 0;
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+.method-details .small-text {
+  font-size: 12px;
+  color: #bdc3c7;
+  margin-top: 5px;
+}
+
+.paypal-link {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 5px 10px;
+  background: #003087;
+  color: white;
+  border-radius: 4px;
+  font-size: 13px;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.paypal-link:hover {
+  background: #002673;
+}
+
+.donation-footer {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+.donation-footer p {
+  margin: 0 0 10px 0;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+.more-options {
+  color: #e74c3c;
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.more-options:hover {
+  text-decoration: underline;
+}
+
+/* Animation when first loaded */
+@keyframes gentleBounce {
+  0% {
+    transform: translateY(100px) scale(0.9);
+    opacity: 0;
+  }
+  80% {
+    transform: translateY(-10px) scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.donation-widget {
+  animation: gentleBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .donation-widget {
+    width: 300px;
+    right: 15px;
+    bottom: 15px;
+  }
+  
+  .donation-widget.minimized {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .donation-widget {
+    width: calc(100% - 30px);
+    right: 15px;
+    left: 15px;
+    bottom: 15px;
+  }
+  
+  .donation-widget.minimized {
+    width: 50px;
+    height: 50px;
+    left: auto;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const widget = document.querySelector('.donation-widget');
+  const toggleBtn = document.querySelector('.toggle-widget');
+  const closeIcon = widget.querySelector('.close-icon');
+  const openIcon = widget.querySelector('.open-icon');
+  
+  // Initialize widget state
+  function initializeWidget() {
+    // First visit - show expanded
+    if (!localStorage.getItem('widgetInitialized')) {
+      widget.classList.remove('minimized');
+      closeIcon.style.display = 'block';
+      openIcon.style.display = 'none';
+      localStorage.setItem('widgetInitialized', 'true');
+      localStorage.setItem('widgetMinimized', 'false');
+    } 
+    // Returning visitor - check their preference
+    else {
+      const isMinimized = localStorage.getItem('widgetMinimized') === 'true';
+      if (isMinimized) {
+        widget.classList.add('minimized');
+        closeIcon.style.display = 'none';
+        openIcon.style.display = 'block';
+      } else {
+        widget.classList.remove('minimized');
+        closeIcon.style.display = 'block';
+        openIcon.style.display = 'none';
+      }
+    }
+  }
+  
+  // Toggle widget state
+  function toggleWidget() {
+    const isMinimized = widget.classList.contains('minimized');
+    
+    if (isMinimized) {
+      // Expand widget
+      widget.classList.remove('minimized');
+      closeIcon.style.display = 'block';
+      openIcon.style.display = 'none';
+      localStorage.setItem('widgetMinimized', 'false');
+    } else {
+      // Minimize widget
+      widget.classList.add('minimized');
+      closeIcon.style.display = 'none';
+      openIcon.style.display = 'block';
+      localStorage.setItem('widgetMinimized', 'true');
+    }
+  }
+  
+  // Initialize on load
+  initializeWidget();
+  
+  // Toggle when button is clicked
+  toggleBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleWidget();
+  });
+  
+  // Click header to expand if minimized
+  const header = document.querySelector('.donation-header');
+  header.addEventListener('click', function(e) {
+    if (widget.classList.contains('minimized') && e.target === this) {
+      toggleWidget();
+    }
+  });
+  
+  // Click outside to minimize if expanded
+  document.addEventListener('click', function(e) {
+    if (!widget.contains(e.target) && !widget.classList.contains('minimized')) {
+      toggleWidget();
+    }
+  });
+});
+</script>
+
+
+
+    <script>
+        // Gallery Filter Functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filterValue = button.getAttribute('data-filter');
+
+                // Filter items
+                galleryItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Gallery Modal Functionality
+        const galleryModal = document.querySelector('.gallery-modal');
+        const modalClose = document.querySelector('.modal-close');
+        const modalImg = document.querySelector('.modal-img');
+        const modalTitle = document.querySelector('.modal-title');
+        const modalCategory = document.querySelector('.modal-category');
+        const modalDate = document.querySelector('.modal-date');
+        const modalDescription = document.querySelector('.modal-description');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('.gallery-img').getAttribute('src');
+                const category = item.querySelector('.gallery-category').textContent;
+                const title = item.querySelector('.gallery-title').textContent;
+                const date = item.querySelector('.gallery-date').textContent;
+
+                modalImg.setAttribute('src', imgSrc);
+                modalImg.setAttribute('alt', title);
+                modalCategory.textContent = category;
+                modalTitle.textContent = title;
+                modalDate.textContent = date;
+                
+                // Set different descriptions based on category
+                if (category === 'Orphan Care') {
+                    modalDescription.textContent = `This photo captures the joyful moments of children during their time at the foundation. Our home provides a safe and nurturing environment where children can play, learn, and grow together as a family. The bonds formed here often last a lifetime, creating a support system that many of our children lacked before coming to NextStep.`;
+                } else if (category === 'Education') {
+                    modalDescription.textContent = `Education is the cornerstone of our work at NextStep Foundation. This image shows our commitment to providing quality learning opportunities that help break the cycle of poverty. Our educational programs include formal schooling, vocational training, and life skills development.`;
+                } else if (category === 'Walemavu Support') {
+                    modalDescription.textContent = `Our Walemavu (disability) support program ensures that children with special needs receive the care and resources they require. This photo demonstrates our inclusive approach that focuses on ability rather than disability, helping each child reach their full potential.`;
+                } else if (category === 'Talent Development') {
+                    modalDescription.textContent = `At NextStep, we believe every child has unique talents waiting to be discovered. Our talent development program provides platforms for children to explore and excel in arts, sports, music, and other areas, building confidence and life skills.`;
+                } else if (category === 'Events') {
+                    modalDescription.textContent = `Community events and celebrations are an important part of life at NextStep. These occasions bring together children, staff, volunteers, and supporters to share joy, celebrate milestones, and strengthen our community bonds.`;
+                } else {
+                    modalDescription.textContent = `This image represents the heart of NextStep Foundation's work - transforming lives through compassion, education, and opportunity. Each photo in our gallery tells a story of hope, resilience, and the power of community support.`;
+                }
+
+                galleryModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        modalClose.addEventListener('click', () => {
+            galleryModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        galleryModal.addEventListener('click', (e) => {
+            if (e.target === galleryModal) {
+                galleryModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Intersection Observer for animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
