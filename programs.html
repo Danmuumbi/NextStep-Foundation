@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NextStep Foundation - Empowering Orphans, Uplifting Lives</title>
+    <title>Our Programs | NextStep Foundation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Global Styles */
+        /* Global Styles (Consistent with Previous Pages) */
         :root {
             --primary-color: #2c5fa8;
             --secondary-color: #e67e22;
@@ -97,74 +97,112 @@
             text-align: center;
         }
 
-        /* Hero Section */
-        .hero {
+        /* Page Header */
+        .programs-header {
             position: relative;
-            height: 90vh;
-            min-height: 600px;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            height: 400px;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
             color: var(--white);
             display: flex;
             align-items: center;
             text-align: center;
+            margin-bottom: 60px;
         }
 
-        .hero-content {
+        .programs-header-content {
             max-width: 800px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
+        .programs-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
             line-height: 1.2;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        /* Programs Navigation */
+        .programs-nav {
+            background: var(--white);
+            box-shadow: var(--box-shadow);
+            border-radius: 50px;
+            padding: 10px;
+            max-width: 800px;
+            margin: -30px auto 50px;
+            position: relative;
+            z-index: 1;
         }
 
-        .hero-btns {
+        .programs-nav-list {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            list-style: none;
             flex-wrap: wrap;
         }
 
-        /* About Section */
-        .about {
+        .programs-nav-item {
+            margin: 5px;
+        }
+
+        .programs-nav-link {
+            display: block;
+            padding: 10px 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+
+        .programs-nav-link:hover, 
+        .programs-nav-link.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* Program Sections */
+        .program-section {
             padding: 80px 0;
+        }
+
+        .program-section:nth-child(even) {
             background-color: var(--white);
         }
 
-        .about-content {
+        .program-content {
             display: flex;
             align-items: center;
             gap: 40px;
             flex-wrap: wrap;
         }
 
-        .about-text {
+        .program-text {
             flex: 1;
             min-width: 300px;
         }
 
-        .about-text h2 {
+        .program-text h2 {
             color: var(--primary-color);
-            font-size: 2.2rem;
+            font-size: 2rem;
             margin-bottom: 1.5rem;
         }
 
-        .about-text p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+        .program-text h3 {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
         }
 
-        .about-image {
+        .program-text ul {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+
+        .program-text ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .program-image {
             flex: 1;
             min-width: 300px;
             border-radius: 10px;
@@ -172,250 +210,109 @@
             box-shadow: var(--box-shadow);
         }
 
-        .about-image img {
+        .program-image img {
             width: 100%;
             height: auto;
             transition: var(--transition);
         }
 
-        .about-image:hover img {
+        .program-image:hover img {
             transform: scale(1.05);
         }
 
-        /* Impact Section */
-        .impact {
-            padding: 80px 0;
-            background: linear-gradient(rgba(44, 95, 168, 0.9), rgba(44, 95, 168, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
-            color: var(--white);
-            text-align: center;
-        }
-
-        .impact .section-title {
-            color: var(--white);
-        }
-
-        .impact .section-title::after {
-            background: var(--secondary-color);
-        }
-
-        .impact-stats {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 50px;
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
+            margin: 40px 0;
         }
 
-        .stat-item {
-            flex: 1;
-            min-width: 200px;
+        .feature-card {
+            background: var(--white);
             padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            backdrop-filter: blur(5px);
+            box-shadow: var(--box-shadow);
+            border-top: 4px solid var(--secondary-color);
             transition: var(--transition);
         }
 
-        .stat-item:hover {
+        .feature-card:hover {
             transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.2);
         }
 
-        .stat-number {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--secondary-color);
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
         }
 
-        .stat-text {
-            font-size: 1.2rem;
-            font-weight: 600;
+        .feature-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
         }
 
-        /* Programs Section */
-        .programs {
+        /* Success Stories */
+        .success-stories {
+            background: linear-gradient(rgba(44, 95, 168, 0.9), rgba(44, 95, 168, 0.9)), url('https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80') no-repeat center center/cover;
+            color: var(--white);
             padding: 80px 0;
-            background-color: var(--light-color);
+            text-align: center;
         }
 
-        .programs-grid {
+        .success-stories .section-title {
+            color: var(--white);
+        }
+
+        .stories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 50px;
         }
 
-        .program-card {
-            background: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-        }
-
-        .program-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .program-image {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .program-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .program-card:hover .program-image img {
-            transform: scale(1.1);
-        }
-
-        .program-content {
-            padding: 25px;
-        }
-
-        .program-content h3 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .program-content p {
-            margin-bottom: 20px;
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            padding: 80px 0;
-            background-color: var(--white);
-        }
-
-        .testimonials-slider {
-            max-width: 800px;
-            margin: 50px auto 0;
-            position: relative;
-        }
-
-        .testimonial {
-            background: var(--light-color);
+        .story-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
             padding: 30px;
             border-radius: 10px;
-            box-shadow: var(--box-shadow);
-            text-align: center;
-            display: none;
+            transition: var(--transition);
         }
 
-        .testimonial.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
+        .story-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .testimonial-text {
-            font-size: 1.1rem;
-            font-style: italic;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .testimonial-text::before,
-        .testimonial-text::after {
-            content: '"';
-            font-size: 3rem;
-            color: var(--secondary-color);
-            opacity: 0.3;
-            position: absolute;
-        }
-
-        .testimonial-text::before {
-            top: -20px;
-            left: -10px;
-        }
-
-        .testimonial-text::after {
-            bottom: -40px;
-            right: -10px;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 30px;
-        }
-
-        .author-image {
-            width: 60px;
-            height: 60px;
+        .story-image {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             overflow: hidden;
-            margin-right: 15px;
+            margin: 0 auto 20px;
             border: 3px solid var(--secondary-color);
         }
 
-        .author-info h4 {
-            color: var(--primary-color);
-            margin-bottom: 5px;
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .author-info p {
-            color: var(--text-color);
-            font-size: 0.9rem;
+        .story-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
         }
 
-        .testimonial-nav {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-        }
-
-        .testimonial-dot {
-            width: 12px;
-            height: 12px;
-            background: #ccc;
-            border-radius: 50%;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .testimonial-dot.active {
-            background: var(--secondary-color);
-            transform: scale(1.2);
-        }
-
-        /* Call to Action Section */
-        .cta {
-            padding: 80px 0;
-            background: linear-gradient(rgba(230, 126, 34, 0.9), rgba(230, 126, 34, 0.9)), url('https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80') no-repeat center center/cover;
-            color: var(--white);
-            text-align: center;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .cta p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
+        .story-card p {
+            font-style: italic;
         }
 
         /* Responsive Styles */
         @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.8rem;
+            .programs-header h1 {
+                font-size: 2.5rem;
             }
             
             .section-title {
@@ -424,72 +321,45 @@
         }
 
         @media (max-width: 768px) {
-            .hero {
-                height: auto;
-                padding: 100px 0;
+            .programs-header {
+                height: 350px;
+                padding: 80px 0;
             }
             
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-btns {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .about-content {
+            .program-content {
                 flex-direction: column;
             }
             
-            .about-text, .about-image {
+            .program-text, .program-image {
                 flex: none;
                 width: 100%;
             }
             
-            .impact-stats {
-                flex-direction: column;
-                align-items: center;
+            .programs-nav {
+                border-radius: 10px;
             }
             
-            .stat-item {
-                width: 100%;
-                max-width: 300px;
+            .programs-nav-list {
+                flex-direction: column;
+                align-items: center;
             }
         }
 
         @media (max-width: 576px) {
-            .hero h1 {
+            .programs-header h1 {
                 font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
             }
             
             .section-title {
                 font-size: 1.8rem;
             }
             
-            .btn {
-                padding: 10px 20px;
-                font-size: 14px;
+            .program-section {
+                padding: 60px 0;
             }
             
-            .stat-number {
-                font-size: 2.5rem;
-            }
-            
-            .stat-text {
-                font-size: 1rem;
-            }
-            
-            .cta h2 {
-                font-size: 2rem;
-            }
-            
-            .cta p {
-                font-size: 1rem;
+            .feature-card {
+                padding: 20px;
             }
         }
     </style>
@@ -859,191 +729,324 @@
 <!-- Header Component - Copy to here -->
 
 
-
-
     <!-- Main Content (Excluding Header/Footer) -->
     <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Empowering Orphans, Uplifting the Disabled, Nurturing Talent</h1>
-                <p>NextStep Foundation provides love, care, and opportunities to vulnerable children and individuals with disabilities, helping them build brighter futures through education, skills development, and community support.</p>
-                <div class="hero-btns">
-                    <a href="#support" class="btn">Support Our Cause</a>
-                    <a href="#programs" class="btn btn-secondary">Our Programs</a>
-                </div>
+        <!-- Page Header -->
+        <section class="programs-header">
+            <div class="programs-header-content">
+                <h1>Our Transformative Programs</h1>
+                <p>Comprehensive support for orphans, children with disabilities, and talented youth</p>
             </div>
         </section>
 
-        <!-- About Section -->
-        <section class="about">
-            <div class="container">
-                <div class="about-content">
-                    <div class="about-text">
-                        <h2>Our Story</h2>
-                        <p>Founded in 2010, NextStep Foundation began with a simple mission: to provide a loving home and quality education to orphaned and vulnerable children in our community. What started as a small initiative has grown into a comprehensive support system that now serves over 50 children annually.</p>
-                        <p>We believe every child deserves safety, education, and the opportunity to discover their unique talents. Our holistic approach addresses physical, emotional, and educational needs while fostering independence and self-worth.</p>
-                        <p>At NextStep, we don't just provide care - we create family. Our children grow up knowing they are valued, capable, and loved.</p>
-                        <a href="#" class="btn">Learn More About Us</a>
-                    </div>
-                    <div class="about-image">
-                        <img src="https://images.unsplash.com/photo-1526666923127-b2970f64b422?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" alt="Children at NextStep Foundation">
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Programs Navigation -->
+        <nav class="programs-nav">
+            <ul class="programs-nav-list">
+                <li class="programs-nav-item"><a href="#yatima" class="programs-nav-link active">Yatima School</a></li>
+                <li class="programs-nav-item"><a href="#walemavu" class="programs-nav-link">Walemavu Support</a></li>
+                <li class="programs-nav-item"><a href="#talent" class="programs-nav-link">Talent Development</a></li>
+                <li class="programs-nav-item"><a href="#international" class="programs-nav-link">Global Outreach</a></li>
+            </ul>
+        </nav>
 
-        <!-- Impact Section -->
-        <section class="impact">
+        <!-- Yatima School Support -->
+        <section id="yatima" class="program-section">
             <div class="container">
-                <h2 class="section-title">Our Impact in Numbers</h2>
-                <p class="text-center" style="max-width: 700px; margin: 0 auto;">Through the generous support of donors and volunteers, we've been able to make a tangible difference in the lives of vulnerable children and individuals with disabilities.</p>
+                <h2 class="section-title">Yatima School Support</h2>
+                <p class="text-center" style="max-width: 800px; margin: 0 auto;">Providing quality education and holistic care for orphaned and vulnerable children</p>
                 
-                <div class="impact-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-text">Children Supported</div>
+                <div class="program-content">
+                    <div class="program-text">
+                        <h2>Education That Transforms Lives</h2>
+                        <p>Our Yatima School program ensures that orphaned and vulnerable children receive quality education in a nurturing environment. We believe education is the most powerful tool to break the cycle of poverty and create sustainable change.</p>
+                        
+                        <h3>Comprehensive Educational Support</h3>
+                        <ul>
+                            <li>Fully-funded primary and secondary education</li>
+                            <li>After-school tutoring and homework assistance</li>
+                            <li>Computer literacy and digital skills training</li>
+                            <li>School supplies, uniforms, and transportation</li>
+                            <li>Nutrition program with daily healthy meals</li>
+                            <li>Counseling and psychosocial support</li>
+                        </ul>
+                        
+                        <p>Our curriculum goes beyond academics to include life skills, financial literacy, and leadership development. We maintain small class sizes (maximum 25 students) to ensure personalized attention.</p>
+                        <a href="#" class="btn">Sponsor a Child's Education</a>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">20+</div>
-                        <div class="stat-text">Talents Nurtured</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">15</div>
-                        <div class="stat-text">Years of Service</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100+</div>
-                        <div class="stat-text">Volunteers Engaged</div>
+                    <div class="program-image">
+                        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" alt="Children learning at Yatima School">
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Programs Section -->
-        <section class="programs" id="programs">
-            <div class="container">
-                <h2 class="section-title">Our Programs</h2>
-                <p class="text-center" style="max-width: 800px; margin: 0 auto;">We offer comprehensive programs designed to meet the diverse needs of the children and individuals we serve.</p>
                 
-                <div class="programs-grid">
-                    <div class="program-card">
-                        <div class="program-image">
-                            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Orphan Support Program">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <div class="program-content">
-                            <h3>Orphan Support</h3>
-                            <p>We provide a loving home, nutritious meals, quality education, and healthcare to orphaned and vulnerable children. Our residential program ensures stability while we work to reunite children with extended family when possible.</p>
-                            <a href="#" class="btn">Learn More</a>
-                        </div>
+                        <h4>Academic Excellence</h4>
+                        <p>Our students consistently outperform national averages, with 85% transitioning to secondary education.</p>
                     </div>
                     
-                    <div class="program-card">
-                        <div class="program-image">
-                            <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Walemavu Program">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-home"></i>
                         </div>
-                        <div class="program-content">
-                            <h3>Walemavu Support</h3>
-                            <p>Our disability inclusion program provides specialized care, therapy, education, and skills training for children and young adults with disabilities. We focus on ability rather than limitation, helping each individual reach their full potential.</p>
-                            <a href="#" class="btn">Learn More</a>
-                        </div>
+                        <h4>Residential Care</h4>
+                        <p>Safe dormitories with house parents provide stability for children without family support.</p>
                     </div>
                     
-                    <div class="program-card">
-                        <div class="program-image">
-                            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Talent Development Program">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heartbeat"></i>
                         </div>
-                        <div class="program-content">
-                            <h3>Talent Development</h3>
-                            <p>We identify and nurture the unique talents of our children through arts, sports, music, and vocational training programs. Many of our alumni have gone on to successful careers in their chosen fields.</p>
-                            <a href="#" class="btn">Learn More</a>
+                        <h4>Health & Wellness</h4>
+                        <p>Regular medical checkups, dental care, and mental health services ensure children thrive.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
                         </div>
+                        <h4>Alumni Support</h4>
+                        <p>We provide university scholarships and career guidance for our graduates.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Testimonials Section -->
-        <section class="testimonials">
+        <!-- Walemavu Support -->
+        <section id="walemavu" class="program-section" style="background-color: #f5f9ff;">
             <div class="container">
-                <h2 class="section-title">Stories of Hope</h2>
-                <p class="text-center" style="max-width: 800px; margin: 0 auto;">Hear from those whose lives have been transformed through NextStep Foundation.</p>
+                <h2 class="section-title">Walemavu Support</h2>
+                <p class="text-center" style="max-width: 800px; margin: 0 auto;">Specialized care and inclusion programs for children with disabilities</p>
                 
-                <div class="testimonials-slider">
-                    <div class="testimonial active">
-                        <div class="testimonial-text">
-                            NextStep gave me more than a home - they gave me a family. After losing my parents, I thought I had no future. Today, I'm in university studying to become a doctor, all thanks to their support and belief in me.
+                <div class="program-content">
+                    <div class="program-image">
+                        <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Child with disability receiving therapy">
+                    </div>
+                    <div class="program-text">
+                        <h2>Empowering Children of All Abilities</h2>
+                        <p>Our Walemavu (Disability) program provides comprehensive support for children with physical, intellectual, and developmental disabilities. We focus on ability rather than limitation, helping each child reach their full potential.</p>
+                        
+                        <h3>Specialized Services</h3>
+                        <ul>
+                            <li>Individualized education plans (IEPs) tailored to each child's needs</li>
+                            <li>Physical, occupational, and speech therapy</li>
+                            <li>Assistive devices and mobility aids</li>
+                            <li>Social skills and independent living training</li>
+                            <li>Parent/caregiver support groups and training</li>
+                            <li>Community awareness and anti-stigma campaigns</li>
+                        </ul>
+                        
+                        <p>Our inclusive approach ensures children with disabilities participate fully in all foundation activities alongside their peers. We've helped over 120 children with disabilities gain greater independence since 2015.</p>
+                        <a href="#" class="btn">Support Our Walemavu Program</a>
+                    </div>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-wheelchair"></i>
                         </div>
-                        <div class="testimonial-author">
-                            <div class="author-image">
-                                <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Sarah K.">
-                            </div>
-                            <div class="author-info">
-                                <h4>Sarah K.</h4>
-                                <p>Former Resident, Now Medical Student</p>
-                            </div>
-                        </div>
+                        <h4>Accessible Facilities</h4>
+                        <p>Ramps, wide doorways, accessible bathrooms, and sensory-friendly spaces throughout our campus.</p>
                     </div>
                     
-                    <div class="testimonial">
-                        <div class="testimonial-text">
-                            Volunteering at NextStep has been the most rewarding experience of my life. Seeing the children grow in confidence and ability reminds me daily of the power of compassion and community.
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-hands-helping"></i>
                         </div>
-                        <div class="testimonial-author">
-                            <div class="author-image">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="David M.">
-                            </div>
-                            <div class="author-info">
-                                <h4>David M.</h4>
-                                <p>Volunteer & Donor</p>
-                            </div>
-                        </div>
+                        <h4>Trained Staff</h4>
+                        <p>Special education teachers and therapists with expertise in various disabilities.</p>
                     </div>
                     
-                    <div class="testimonial">
-                        <div class="testimonial-text">
-                            My son with cerebral palsy found acceptance and specialized care at NextStep that we couldn't find elsewhere. He's now learning to communicate and gaining independence skills we never thought possible.
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-procedures"></i>
                         </div>
-                        <div class="testimonial-author">
-                            <div class="author-image">
-                                <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Grace N.">
-                            </div>
-                            <div class="author-info">
-                                <h4>Grace N.</h4>
-                                <p>Parent of Child in Walemavu Program</p>
-                            </div>
-                        </div>
+                        <h4>Medical Support</h4>
+                        <p>Partnerships with pediatric specialists for regular clinics and surgeries when needed.</p>
                     </div>
                     
-                    <div class="testimonial-nav">
-                        <div class="testimonial-dot active" data-index="0"></div>
-                        <div class="testimonial-dot" data-index="1"></div>
-                        <div class="testimonial-dot" data-index="2"></div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h4>Vocational Training</h4>
+                        <p>Skills development for older youth to prepare for employment opportunities.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Call to Action Section -->
-        <section class="cta" id="support">
+        <!-- Talent Support -->
+        <section id="talent" class="program-section">
             <div class="container">
-                <h2>Join Us in Making a Difference</h2>
-                <p>Your support can change lives. Whether through donations, volunteering, or spreading awareness, you can help us provide hope and opportunity to vulnerable children and individuals with disabilities.</p>
-                <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                    <a href="#" class="btn">Donate Now</a>
-                    <a href="#" class="btn btn-secondary">Become a Volunteer</a>
-                    <a href="#" class="btn">Sponsor a Child</a>
+                <h2 class="section-title">Talent Development</h2>
+                <p class="text-center" style="max-width: 800px; margin: 0 auto;">Nurturing artistic, athletic, and vocational gifts in vulnerable youth</p>
+                
+                <div class="program-content">
+                    <div class="program-text">
+                        <h2>Discovering and Developing Potential</h2>
+                        <p>Our Talent Support program identifies and cultivates the unique abilities of children in our care. Through arts, sports, and vocational training, we help youth build confidence, discipline, and marketable skills.</p>
+                        
+                        <h3>Talent Pathways</h3>
+                        <ul>
+                            <li>Visual arts, music, dance, and drama programs</li>
+                            <li>Football (soccer), basketball, athletics, and swimming</li>
+                            <li>Chess club and academic competitions</li>
+                            <li>Vocational training in carpentry, tailoring, and IT</li>
+                            <li>Annual talent showcase and competitions</li>
+                            <li>Scholarships for exceptional talent</li>
+                        </ul>
+                        
+                        <p>Several of our alumni have received sports scholarships to universities, exhibited artwork internationally, and launched successful careers in creative fields. Talent development builds self-esteem and opens doors to future opportunities.</p>
+                        <a href="#" class="btn">Sponsor a Talent</a>
+                    </div>
+                    <div class="program-image">
+                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Youth participating in talent programs">
+                    </div>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h4>Arts Program</h4>
+                        <p>Weekly classes in drawing, painting, sculpture, and digital art with professional artists.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h4>Music Academy</h4>
+                        <p>Instrumental training, choir, and recording studio for aspiring musicians.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-futbol"></i>
+                        </div>
+                        <h4>Sports Development</h4>
+                        <p>Competitive teams with professional coaching in multiple sports disciplines.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h4>Tech Skills</h4>
+                        <p>Computer programming, graphic design, and digital media training for tech-savvy youth.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <!-- International Outreach -->
+        <section id="international" class="program-section" style="background-color: #f5f9ff;">
+            <div class="container">
+                <h2 class="section-title">Global Outreach</h2>
+                <p class="text-center" style="max-width: 800px; margin: 0 auto;">Building international partnerships to expand our impact</p>
+                
+                <div class="program-content">
+                    <div class="program-image">
+                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="International volunteers with children">
+                    </div>
+                    <div class="program-text">
+                        <h2>Cross-Cultural Collaboration</h2>
+                        <p>Our International Outreach program connects NextStep with global partners who share our vision for vulnerable children. Through these collaborations, we exchange knowledge, resources, and support to enhance our programs.</p>
+                        
+                        <h3>Global Initiatives</h3>
+                        <ul>
+                            <li>International volunteer and internship programs</li>
+                            <li>Professional exchanges for our staff with partner organizations</li>
+                            <li>Global fundraising and child sponsorship network</li>
+                            <li>International pen pal and cultural exchange program</li>
+                            <li>Participation in global conferences on child welfare</li>
+                            <li>Cross-border medical missions and specialist referrals</li>
+                        </ul>
+                        
+                        <p>We currently partner with organizations in 6 countries, benefiting from shared expertise while maintaining our locally-led approach. Our international network helps amplify our impact and advocate for vulnerable children worldwide.</p>
+                        <a href="#" class="btn">Become a Global Partner</a>
+                    </div>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe-africa"></i>
+                        </div>
+                        <h4>Volunteer Program</h4>
+                        <p>Hosting 30+ international volunteers annually who bring specialized skills.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4>Strategic Partnerships</h4>
+                        <p>Collaborations with universities, NGOs, and professional associations worldwide.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4>Global Sponsors</h4>
+                        <p>Child sponsors from 15 countries providing consistent support.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h4>Knowledge Exchange</h4>
+                        <p>Regular staff training with international experts in child development.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-
-
-        
+        <!-- Success Stories -->
+        <section class="success-stories">
+            <div class="container">
+                <h2 class="section-title">Transformed Lives</h2>
+                <p class="text-center" style="max-width: 800px; margin: 0 auto;">These inspiring stories show the real impact of our programs</p>
+                
+                <div class="stories-grid">
+                    <div class="story-card">
+                        <div class="story-image">
+                            <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Grace">
+                        </div>
+                        <h4>Grace's Journey</h4>
+                        <p>"The Yatima School gave me hope after losing my parents. Today I'm studying medicine at university."</p>
+                    </div>
+                    
+                    <div class="story-card">
+                        <div class="story-image">
+                            <img src="https://randomuser.me/api/portraits/men/35.jpg" alt="David">
+                        </div>
+                        <h4>David's Triumph</h4>
+                        <p>"Born with cerebral palsy, Walemavu program helped me walk and now I work as a computer technician."</p>
+                    </div>
+                    
+                    <div class="story-card">
+                        <div class="story-image">
+                            <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Amina">
+                        </div>
+                        <h4>Amina's Success</h4>
+                        <p>"Discovered my artistic talent here. Now my paintings sell in galleries across East Africa."</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 50px;">
+                    <a href="#" class="btn">Read More Success Stories</a>
+                </div>
+            </div>
+        </section>
     </main>
-
-
 
 
 
@@ -1448,8 +1451,13 @@
   }
 </style>
 
-
-
+<script>
+  // Update copyright year automatically
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('year').textContent = new Date().getFullYear();
+  });
+</script>
+<!-- Footer Component - Copy to here -->
 
 
 <!-- Final Fixed Donation Widget with Working Toggle -->
@@ -1839,42 +1847,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script>
-  // Update copyright year automatically
-  document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('year').textContent = new Date().getFullYear();
-  });
-</script>
-<!-- Footer Component - Copy to here -->
-    
-
     <script>
-        // Testimonial Slider
-        document.addEventListener('DOMContentLoaded', function() {
-            const testimonials = document.querySelectorAll('.testimonial');
-            const dots = document.querySelectorAll('.testimonial-dot');
-            let currentIndex = 0;
-            
-            function showTestimonial(index) {
-                testimonials.forEach(testimonial => testimonial.classList.remove('active'));
-                dots.forEach(dot => dot.classList.remove('active'));
+        // Smooth scrolling for program navigation
+        document.querySelectorAll('.programs-nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
                 
-                testimonials[index].classList.add('active');
-                dots[index].classList.add('active');
-                currentIndex = index;
-            }
-            
-            dots.forEach(dot => {
-                dot.addEventListener('click', function() {
-                    showTestimonial(parseInt(this.getAttribute('data-index')));
+                // Update active class
+                document.querySelectorAll('.programs-nav-link').forEach(item => {
+                    item.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Scroll to section
+                window.scrollTo({
+                    top: targetSection.offsetTop - 100,
+                    behavior: 'smooth'
                 });
             });
+        });
+        
+        // Update active nav link on scroll
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
             
-            // Auto-rotate testimonials every 5 seconds
-            setInterval(() => {
-                let nextIndex = (currentIndex + 1) % testimonials.length;
-                showTestimonial(nextIndex);
-            }, 5000);
+            document.querySelectorAll('.program-section').forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const id = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    document.querySelectorAll('.programs-nav-link').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
         });
     </script>
 </body>
